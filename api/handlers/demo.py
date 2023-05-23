@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Body
+from fastapi import APIRouter, Query, Body, Path
 from fastapi.responses import JSONResponse
 from api.responses.detail import DetailResponse
 from pydantic import BaseModel
@@ -26,6 +26,9 @@ def send_data_query(name: str = Query(title="Name", description="Some name")):
     return DetailResponse(message=f"Hello {name}!!!")
 
 
+##########################################################
+# How to set Body parameter for swagger?                #
+##########################################################
 @router.post("/hello/name", response_model=DetailResponse)
 def send_data_body(
         name: NameIn = Body(title="Body", description="The body of send data")
@@ -41,6 +44,25 @@ def send_data_body(
     """
 
     return DetailResponse(message=f"Hello {name.prefix}{name.name}")
+
+
+##########################################################
+# How to set PATH parameter for swagger?                #
+##########################################################
+@router.post("/hello/{name}", response_model=DetailResponse)
+def send_data_body(name: str = Path(title="Name")):
+    """
+    TODO - refer
+    https://fastapi.tiangolo.com/tutorial/path-params-numeric-validations/
+
+    Args:
+        name:
+
+    Returns:
+
+    """
+    return DetailResponse(message=f"Hello...{name}")
+
 
 
 @router.delete("/delete", response_model=DetailResponse)
@@ -63,3 +85,5 @@ def delete_data(name: str):
         )
 
     return DetailResponse(message=f"data deleted for {name}")
+
+
