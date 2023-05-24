@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Query, Body, Path
-from fastapi.responses import JSONResponse
-from api.responses.detail import DetailResponse
-from pydantic import BaseModel
+from fastapi import APIRouter, Body, Path, Query
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+
+from api.responses.detail import DetailResponse
 
 
 class NameIn(BaseModel):
@@ -31,7 +32,7 @@ def send_data_query(name: str = Query(title="Name", description="Some name")):
 ##########################################################
 @router.post("/hello/name", response_model=DetailResponse)
 def send_data_body(
-        name: NameIn = Body(title="Body", description="The body of send data")
+    name: NameIn = Body(title="Body", description="The body of send data")
 ):
     """
     Response with `hello name`, where name is user provided from payload
@@ -64,7 +65,6 @@ def send_data_body(name: str = Path(title="Name")):
     return DetailResponse(message=f"Hello...{name}")
 
 
-
 @router.delete("/delete", response_model=DetailResponse)
 def delete_data():
     return DetailResponse(message="data deleted")
@@ -73,7 +73,7 @@ def delete_data():
 @router.delete(
     "/delete/{name}",
     response_model=DetailResponse,
-    responses={404: {"model": DetailResponse}}
+    responses={404: {"model": DetailResponse}},
 )
 def delete_data(name: str):
     if name == "admin":
@@ -81,9 +81,7 @@ def delete_data(name: str):
             status_code=404,
             content=jsonable_encoder(
                 DetailResponse(message="cannot delete admin data")
-            )
+            ),
         )
 
     return DetailResponse(message=f"data deleted for {name}")
-
-

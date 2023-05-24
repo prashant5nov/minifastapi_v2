@@ -5,6 +5,7 @@ This project teaches you following things -
 
 - How to run `FastAPI` application as a script?
 - How to use `Query`, `Path`, `Body` classes in FastAPI?
+- How to add auto-formatting in projects by using `Makefile`?
 
 
 # Project structure
@@ -34,3 +35,7 @@ minifastapi_v2
 # project dependency management
 
 DEV -> TEST -> UAT -> PROD
+
+
+# How to run `Makefile`?
+`make fmt`
